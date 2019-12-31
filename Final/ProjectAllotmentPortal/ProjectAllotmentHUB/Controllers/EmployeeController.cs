@@ -21,17 +21,33 @@ namespace ProjectAllotmentHUB.Controllers
             {
                 using (ProjectAllocationDBEntities entity = new ProjectAllocationDBEntities())
                 {
-                    var listofEmployees = entity.Employees.Select(e => new
+                    List<int> list4 = new List<int>();
+                    var list1 = entity.Employees.Select(e => e.Employee_Id).ToList();
+                    var list2 = entity.EmployeeStreams.Select(f => f.Employee_Id).ToList();
+
+                    IEnumerable<int> list3;
+                    list3 = list1.Except(list2);
+                   
+                    foreach (var obj in list3)
                     {
+                        var listofEmployees = entity.Employees.Select(e => new
+                    {   
+                        
                         employee_Id = e.Employee_Id,
-                        employeename = e.EmployeeName,
-                        employeeId = e.EmployeeId,
-                        employeePhno = e.EmployeePhno,
-                        employeemailId = e.EmployeeMailId,
-                        doj = e.DOJ
-                    });
-                    return Ok(listofEmployees.ToList());
-                }
+                        //employeename = e.EmployeeName,
+                        //employeeId = e.EmployeeId,
+                        //employeePhno = e.EmployeePhno,
+                        //employeemailId = e.EmployeeMailId,
+                        //doj = e.DOJ
+                    
+                });
+
+                        return Ok(listofEmployees.ToList());
+                    }
+
+                    return Ok("dhadhai");
+                
+            }
             }
             catch (Exception ex)
             {
